@@ -1,0 +1,38 @@
+@charset "utf-8";
+.p-article{
+  padding: 10px;
+  border-top: currentColor 1px solid;
+  counter-increment : chapter;
+
+  &_ttl{
+    font-weight: var(--fw-bold);
+    color: var(--clr-blue);
+    &::before{
+      content : counter(chapter) ".";
+      margin-right: 5px;
+    }
+  }
+  &_blc{
+
+  }
+  &_sub{
+    font-weight: var(--fw-medium);
+    margin-bottom: 10px;
+  }
+  &_txt{
+    margin: 5px 0;
+  }
+  &_code{
+    display: block;
+    padding: 15px;
+    color: var(--clr-white);
+    background: var(--clr-code);
+    margin-bottom: 15px;
+  }
+}
+
+
+@media screen and (max-width: $break-point-sp) {
+  .p-article{
+  }
+}

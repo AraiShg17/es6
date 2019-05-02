@@ -1,0 +1,148 @@
+<% const url = 'https://sample.com' %>
+<% const title = 'ES6記法 サンプル集' %>
+<% const description = 'ES6の記法のサンプル集詰め合わせ' %>
+
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="format-detection" content="telephone=no">
+  <title><%- title %></title>
+
+  <meta name="description" content="<%- description %>">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta property="og:url" content="<%- url %>/">
+  <meta property="og:title" content="<%- title %>">
+  <meta property="og:description" content="<%- description %>">
+  <meta property="og:site_name" content="<%- title %>">
+  <meta property="og:image" content="<%- url %>/ogp.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%- title %>">
+  <meta name="twitter:url" content="<%- url %>/">
+  <meta name="twitter:description" content="<%- description %>">
+
+  <link rel="manifest" href="manifest.json">
+
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100,300,400,500,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/libs/plugins.js" defer></script>
+  <script src="/js/common/common.js" defer></script>
+</head>
+
+<body>
+<div class="l-wrapper">
+  <%- include('./_ejs/header') %>
+
+  <main class="l-main">
+
+    <article class="p-article">
+      <h2 class="p-article_ttl">変数宣言</h2>
+      <div class="p-article_blc">
+        <h3 class="p-article_sub">let/constによる変数宣言</h3>
+        <p class="p-article_txt">ES2015では{}（ブロックスコープ）内でletやconstで宣言された変数はその中でのみ適用することができます。</p>
+        <code class="p-article_code">
+        let foo = 'a';<br>
+        {<br>
+        let foo = 'b';<br>
+        console.log(foo);<br>
+        // 結果 b<br>
+        }<br>
+        console.log(foo);<br>
+        // 結果 a
+        </code>
+
+        <p class="p-article_txt">constで宣言された場合は値の変更が不可となり中身の値が保証されます。</p>
+
+        <code class="p-article_code">
+        const foo = 'a';<br>
+        foo = 'b';<br>
+        // 上記のようなケースはエラーとなる
+        </code>
+
+      </div><!-- /.p-article_blc -->
+    </article><!-- /.p-article -->
+
+
+    <article class="p-article">
+      <h2 class="p-article_ttl">文字列検索</h2>
+      <div class="p-article_blc">
+        <h3 class="p-article_sub">文字列検索メソッド一覧</h3>
+        <p class="p-article_txt">前方一致/startsWith()、後方一致/endsWith()、文字列一致/includes()</p>
+        <code class="p-article_code">
+          const str = 'foo-bar'<br>
+          str.startsWith('foo'); //結果 true 前から調べて一致するか<br>
+          str.endsWith('bar'); //結果 true 後ろから調べて一致するか<br>
+          str.includes('oo-b'); //結果 true 文字列を調べて一致するか<br>
+        </code>
+
+        <p class="p-article_txt">includes()に2つ目のパラメータを設定し検索開始位置をしていできる</p>
+        <code class="p-article_code">
+          const str = 'foo-bar'<br>
+          str.includes('foo', str.indexOf('-')); //結果 false -から検索開始するため不一致になる<br>
+        </code>
+
+        <p class="p-article_txt">filterを使って配列の中身を文字列検索</p>
+        <code class="p-article_code">
+          const data = ['first-start','first-end','second-start','second-end','third-start','third-end']<br>
+          <br>
+          data.filter((d) => {
+          console.log(d.endsWith('-start'));<br>
+          //結果 一つ目から順に文字列検索を行うのでtrueとfalseが交互になる
+          })
+        </code>
+
+      </div><!-- /.p-article_blc -->
+    </article><!-- /.p-article -->
+
+
+
+    <article class="p-article">
+      <h2 class="p-article_ttl">文字列追加</h2>
+      <div class="p-article_blc">
+        <h3 class="p-article_sub">文字列追加方法</h3>
+        <p class="p-article_txt">repeat/padStart/padEnd</p>
+        <code class="p-article_code">
+          const foo = 'text';<br>
+          'ABC'.repeat(3) + foo;
+          // 結果 ABCABCABCtext ABCを三回リピートする。
+        </code>
+
+        <p class="p-article_txt">repeatの使用例</p>
+        <code class="p-article_code">
+          const limit = 3;<br>
+          let i = 0;<br>
+
+          while(i &lt;= 100) {<br>
+          'No.' + '0'.repeat(limit - String(i).length) + i;<br>
+          i++;<br>
+          }<br>
+          // 結果 3桁に届かない場合左側に0を詰める。 001など
+        </code>
+
+        <p class="p-article_txt">padStart/padEndの使用例</p>
+        <code class="p-article_code">
+          'abc'.padStart(6, 'X')<br>
+          // 結果 XXXabc
+
+          'abc'.padEnd(6, 'X')<br>
+          // 結果 abcXXX<br>
+          <br>
+          //repeatとの大きな違いは'abc'で三文字と捉え、繰り返す回数によってはabcaなどの半端な状態になる。
+        </code>
+
+      </div><!-- /.p-article_blc -->
+    </article><!-- /.p-article -->
+
+  </main><!-- /.l-main -->
+
+  <%- include('./_ejs/footer') %>
+</div><!-- /.l-wrapper -->
+
+</body>
+
+</html>
