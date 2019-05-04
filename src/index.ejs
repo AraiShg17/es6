@@ -48,9 +48,9 @@
         <code class="p-article_code">
         let foo = 'a';<br>
         {<br>
-        let foo = 'b';<br>
-        console.log(foo);<br>
-        // 結果 b<br>
+        　let foo = 'b';<br>
+        　console.log(foo);<br>
+        　// 結果 b<br>
         }<br>
         console.log(foo);<br>
         // 結果 a
@@ -91,8 +91,8 @@
           const data = ['first-start','first-end','second-start','second-end','third-start','third-end']<br>
           <br>
           data.filter((d) => {
-          console.log(d.endsWith('-start'));<br>
-          //結果 一つ目から順に文字列検索を行うのでtrueとfalseが交互になる
+          　console.log(d.endsWith('-start'));<br>
+          　//結果 一つ目から順に文字列検索を行うのでtrueとfalseが交互になる
           })
         </code>
 
@@ -118,8 +118,8 @@
           let i = 0;<br>
 
           while(i &lt;= 100) {<br>
-          'No.' + '0'.repeat(limit - String(i).length) + i;<br>
-          i++;<br>
+          　'No.' + '0'.repeat(limit - String(i).length) + i;<br>
+          　i++;<br>
           }<br>
           // 結果 3桁に届かない場合左側に0を詰める。 001など
         </code>
@@ -133,6 +133,110 @@
           // 結果 abcXXX<br>
           <br>
           //repeatとの大きな違いは'abc'で三文字と捉え、繰り返す回数によってはabcaなどの半端な状態になる。
+        </code>
+
+      </div><!-- /.p-article_blc -->
+    </article><!-- /.p-article -->
+
+
+    <article class="p-article">
+      <h2 class="p-article_ttl">テンプレートリテラル</h2>
+      <div class="p-article_blc">
+        <h3 class="p-article_sub">バッククォート</h3>
+        <p class="p-article_txt">``で囲むことで複数行や展開を行うことができる</p>
+        <code class="p-article_code">
+          const data = '晴れ';<br>
+          console.log(`今日は${data}だ`);<br>
+          // 結果 今日は晴れだ
+        </code>
+
+        <p class="p-article_txt">タグ付きテンプレートリテラルのサンプル例解説</p>
+        <code class="p-article_code">
+          // 整数をカンマ区切りで表示するタグ<br>
+          function commalizeTag(hashes, ...values) {<br>
+          　console.log(hashes, ...values)<br>
+          　// hashesに文字列部分が配列で格納 ...valuesに変数部分が格納<br>
+          　// Array(3) [ "価格は", "円（税込", "円）です。" ] 2500 2700<br>
+          　return values<br>
+          　.map((value, index) => {return hashes[index] + commalize(value)})<br>
+          　// 前から順に連結していく処理。その際に変数部分をcommalizeに渡し処理してカンマを付与<br>
+          　.concat(hashes.slice(values.length))<br>
+          　// 一番後ろの文字列を追加<br>
+          　.join("");<br>
+          　//配列を文字列に変更<br>
+          　<br>
+          //渡されてた値にカンマを付与して返す。<br>
+          function commalize(number) {<br>
+          　return number<br>
+          　　.toString()<br>
+          　　.replace(/(?!^)(?=(?:\d{3})+$)/g, ",");<br>
+         　}<br>
+          }<br>
+          <br>
+          const price = 2500;<br>
+          const d = price * 1.08<br>
+          <br>
+          commalizeTag `価格は${price}円（税込${d}円）です。`; // 価格は2,500円（税込2,700円）です。
+        </code>
+
+      </div><!-- /.p-article_blc -->
+    </article><!-- /.p-article -->
+
+
+    <article class="p-article">
+      <h2 class="p-article_ttl">配列メソッド</h2>
+      <div class="p-article_blc">
+        <h3 class="p-article_sub">新しい配列のメソッドサンプル</h3>
+        <p class="p-article_txt">Array.from/Array.of/Array.prototype.fill/Array.prototype.includes</p>
+        <code class="p-article_code">
+          console.log(Array.from('foo'));<br>
+          // 結果 Array ["f", "o", "o"]<br>
+          <br>
+          console.log(Array.from([1, 2, 3], (x) => {return x + x}));<br>
+          // 結果 Array [2, 4, 6]
+          <br>
+          console.log(Array.from([1, 2, 3], (x) => {return x + 'です'}));<br>
+          // 結果 Array ["1です", "2です", "3です"]
+          <br>
+          console.log(Array.of(1),Array.of(1,2));<br>
+          console.log([1],[1,2]);<br>
+          // 結果 Array [ 1 ], Array [ 1, 2 ] 下の方法で基本は問題ないがケースによって下では成立しない場合がある
+          <br>
+          console.log(new Array(3).fill(''))<br>
+          console.log([ "", "", "" ])<br>
+          // 結果 Array(3) [ "", "", "" ]<br>
+          <br>
+          const list = ['grid', 'block', 'flex', 'inline']<br>
+          console.log(list.includes('grid')); // 結果 true<br>
+          console.log(list.indexOf('grid')); // 結果 0<br>
+          <br>
+          const list = [0, 1, 2, 3];<br>
+          console.log(list.find((data) => {return data >= 2})); // 結果 2<br>
+          console.log(list.filter((data) => {return data >= 2})); // 結果 Array [ 2, 3 ]<br>
+          // findとfilterの違い。<br>
+          // find/マッチした時点で値を抽出し処理を終了する。<br>
+          // filter/マッチするもの全てを抽出する。そのため配列分全てチェックする必要がある。
+        </code>
+
+        <p class="p-article_txt">同じタグ全てに対して処理するケース</p>
+        <code class="p-article_code">
+          Array.from(document.querySelectorAll('a')).map((x) => {<br>
+          　処理を書く<br>
+          })<br>
+          // 対象全てをArray.fromで配列に変換。mapで配列全てに対して順に処理。<br>
+          // ケースによってmap部分をfilter, find, map, reduceなどにして使うなど
+        </code>
+
+      </div><!-- /.p-article_blc -->
+    </article><!-- /.p-article -->
+
+
+    <article class="p-article">
+      <h2 class="p-article_ttl">Object.assign</h2>
+      <div class="p-article_blc">
+        <h3 class="p-article_sub"></h3>
+        <p class="p-article_txt"></p>
+        <code class="p-article_code">
         </code>
 
       </div><!-- /.p-article_blc -->
